@@ -1,0 +1,41 @@
+# This is mime database file of MPID.
+# Strings beginning with '#' are comments
+# Format:
+# section/type = extension1 [extension2 [extension3]]
+# Each mimetype should has at least one extension
+
+# Application
+application/vnd.lotus-1-2-3 = 123
+application/x-archive = a
+application/x-abiword = abw
+application/x-font-afm = afm
+application/illustrator = ai
+application/x-php = php php3 php4 php5
+
+# Image
+image/x-applix-graphics = ag
+image/x-3ds = 3ds
+image/bmp = bmp dib
+image/gif = gif
+image/jpeg = jfif jpg jpe jpeg
+image/png = png
+image/tiff = tif tiff
+
+
+# Audio
+audio/x-mod = 669
+audio/ac3 = ac3
+audio/x-aiff = aif aifc aiff
+
+# Text
+text/x-adasrc = adb ads
+text/html = htm html shtml
+text/plain = txt doc asc v
+text/css = css cssl
+
+# Archives
+application/zip = zip
+application/x-rar-compressed = rar
+
+# End of file
+
