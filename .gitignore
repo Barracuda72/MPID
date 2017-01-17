@@ -31,3 +31,10 @@
 # Debug files
 *.dSYM/
 *.su
+
+# binaries
+parser
+main
+
+# My old directory
+OLD
