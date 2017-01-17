@@ -840,17 +840,17 @@ yylval = 0; return TOKFALSE;
 case 9:
 YY_RULE_SETUP
 #line 15 "htconfig.l"
-yylval = strdup(yytext); return TOKWORD;
+yylval = (long)strdup(yytext); return TOKWORD;
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 16 "htconfig.l"
-yylval = strdup(yytext); return TOKPATH;
+yylval = (long)strdup(yytext); return TOKPATH;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 17 "htconfig.l"
-yylval = strdup(yytext); return TOKFILE;
+yylval = (long)strdup(yytext); return TOKFILE;
 	YY_BREAK
 case 12:
 YY_RULE_SETUP

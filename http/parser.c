@@ -58,13 +58,13 @@ int parse_input(char *data, http_info *i)
   };
   
   // Вычленяем имя файла, к которому производилось обращение
-  while((data[0] != '/') && (data[0] != '\0')) *data++;
+  while((data[0] != '/') && (data[0] != '\0')) data++;
   if(data[0] == 0) return -3;
   
   tmp = data;
   pos = 0;
   
-  while((data[0] != ' ') && (data[0] != '?') && (data[0] != '\0')) { *data++; pos++; }
+  while((data[0] != ' ') && (data[0] != '?') && (data[0] != '\0')) { data++; pos++; }
   if(data[0] == 0) return -3;
   
   pos++;	//strncpy_p HACK
@@ -78,12 +78,12 @@ int parse_input(char *data, http_info *i)
   {
     i->args[0] = '\0';
   } else {
-    *data++;
+    data++;
     if(data[0] == 0) return -4;
     tmp = data;
     pos = 0;
     
-    while((data[0] != ' ') && (data[0] != '\0')) { *data++; pos++; }
+    while((data[0] != ' ') && (data[0] != '\0')) { data++; pos++; }
     if(data[0] == 0) return -5;
     
     pos++;	//strncpy_p HACK
@@ -94,23 +94,23 @@ int parse_input(char *data, http_info *i)
   //printf("%s\n", i->args);
   
   // Найдем и определим версию протокола
-  *data++;
+  data++;
   if(data[0] == 0) return -6;
   
-  while((data[0] != '.') && (data[0] != '\0')) { *data++;}
+  while((data[0] != '.') && (data[0] != '\0')) { data++;}
   if(data[0] == 0) return -7;
   
-  *data++;
+  data++;
   if(data[0] == 0) return -8;
   
   if(data[0] == '0') i->http_ver = HTTP_10;
   else if(data[0] == '1') i->http_ver = HTTP_11;
   else return -9;
   
-  while((data[0] != '\n') && (data[0] != '\0')) { *data++;}
+  while((data[0] != '\n') && (data[0] != '\0')) { data++;}
   if(data[0] == 0) return -10;
   
-  *data++;
+  data++;
   if(data[0] == 0) return 0; //-11; //HACK
   
   // Выведем остаток
@@ -126,10 +126,10 @@ int parse_input(char *data, http_info *i)
     
     if((data[0] == '\r')||(data[0] == '\n'))	// Нашли пустой заголовок - обработка закончена
     {
-      *data++;
+      data++;
       if(data[0] == '\n')
       {
-	*data++;
+        data++;
       }
       
       break;
@@ -138,10 +138,10 @@ int parse_input(char *data, http_info *i)
     name = data;
     p1 = 0;
     
-    while((data[0] != ':') && (data[0] != '\0')) { *data++; p1++; }
+    while((data[0] != ':') && (data[0] != '\0')) { data++; p1++; }
     if(data[0] == 0) return -12;
     
-    while(((data[0] == ':') || (data[0] == ' ')) && (data[0] != '\0')) { *data++; }
+    while(((data[0] == ':') || (data[0] == ' ')) && (data[0] != '\0')) { data++; }
     if(data[0] == 0) return -13;
     
     value = data;
@@ -149,12 +149,12 @@ int parse_input(char *data, http_info *i)
     
     //printf("data = %s|EndData\n", data);
     
-    while((data[0] != '\r')&&(data[0] != '\n') && (data[0] != '\0')) { *data++; p2++; }
+    while((data[0] != '\r')&&(data[0] != '\n') && (data[0] != '\0')) { data++; p2++; }
     if(data[0] == 0) return -14;
-    if(data[0] == '\r') *data++;
+    if(data[0] == '\r') data++;
     p2++;	//strncpy_p HACK
     
-    *data++;
+    data++;
     if((data[0] == 0)) 
     {
       if(i->method == METHOD_GET) return -15;	//Грязный, грязный HACK

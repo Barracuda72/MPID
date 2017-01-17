@@ -1,6 +1,6 @@
 #	libHTTP
 
-CFLAGS= -I../ -I./ -L../
+CFLAGS= -I../ -I./ -L../ -Wall -Wextra -std=gnu11 -pedantic
 CC=fakecc
 
 all:	libhttp.so

@@ -12,9 +12,11 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <arpa/inet.h>
 #include <dirent.h>
 //#include <signal.h>
 #include <unistd.h>
+#include <libgen.h>
 #include <fcntl.h>
 //#include <dlfcn.h>
 
@@ -74,11 +76,16 @@ htconf cfg =
 {
   "defname",
   "/tmp",
-  "index.html",
+  {"index.html"},
   0,
   0,
-  {0},
-  {0}
+  0,
+  {
+    {0}
+  },
+  {
+    {0}
+  }
 };
 
 int init_module(void)
@@ -93,6 +100,7 @@ int init_module(void)
 int fini_module(void)
 {
   //free(cfg);
+  return 0;
 }
 
 int send_answer(int sockFd, int num)
@@ -108,12 +116,14 @@ int send_answer(int sockFd, int num)
       send(sockFd, ans, strlen(ans), (long)NULL);
       free(ans);
     }
+
+    return 0;
 }
 
 int find_index_page(char *vars[], int indcnt, char *dir, char *indname)
 {
-  int pos;
-  char *tmp;
+  //int pos;
+  //char *tmp;
   char path[1024];
   int i; 
  
@@ -382,7 +392,7 @@ int handle_connection(int sockId, struct sockaddr_in *cli)
 	    //printf("Found status header\n");
 	    temp[0] = 'X';
 	    temp[1] = '-';
-	    while((temp[0] != ' ')&&(temp[0] != '\0')) *temp++;
+	    while((temp[0] != ' ')&&(temp[0] != '\0')) temp++;
 	    send_answer(sockId, atoi(temp));
 	    status = 3;
 	    continue;
@@ -416,8 +426,8 @@ int handle_connection(int sockId, struct sockaddr_in *cli)
 	    }
 	  }
 	  
-	  while((temp[0] != 0)&&(temp[0] != '\n')) *temp++;
-	  if(temp[0] != 0) *temp++;
+	  while((temp[0] != 0)&&(temp[0] != '\n')) temp++;
+	  if(temp[0] != 0) temp++;
 	}
 	  if(status == 0) send_answer(sockId, HTTP_200);
       } else {

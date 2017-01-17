@@ -1,18 +1,19 @@
 SUBDIRS=config
+CFLAGS=-Wall -Wextra -std=gnu11 -pedantic
 
 all: main libLog.so
 
 main: main.c libLog.so libmime.so libhttp.so
 	@echo	Building main module...
-	@gcc -g -rdynamic -Wl,-rpath=. -o main main.c -I. -L. -lLog -ldl #-lmime
+	@gcc -g $(CFLAGS) -rdynamic -Wl,-rpath=. -o main main.c -I. -L. -lLog -ldl #-lmime
 
 libLog.so: libLog.c libLog.h
 	@echo Building libLog
-	@gcc -o libLog.so -g -fPIC -shared libLog.c -I.
+	@gcc $(CFLAGS) -o libLog.so -g -fPIC -shared libLog.c -I.
 
 libmime.so: libmime.c libmime.h
 	@echo Building libMime
-	@gcc -o libmime.so -g -fPIC -shared -nostartfiles libmime.c -I.
+	@gcc $(CFLAGS) -o libmime.so -g -fPIC -shared -nostartfiles libmime.c -I.
 
 libhttp.so:
 	@make -C http

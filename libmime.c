@@ -35,13 +35,16 @@ mimetype typesdb[1024];
 
 int typesdbsz = 0;//sizeof(typesdb)/sizeof(mimetype);
 
+int load_mime_db();
+
 int _init()
 {
-  load_mime_db();
+  return load_mime_db();
 }
 
 int _fini()
 {
+  return 0;
 }
 
 int load_mime_db()
@@ -61,7 +64,7 @@ int load_mime_db()
     {
       if(buf[strlen(buf) - 1] == '\n')
       {
-	buf[strlen(buf) - 1] = '\0';
+        buf[strlen(buf) - 1] = '\0';
       }
       
       if(buf[0] == '#') continue;
@@ -71,9 +74,9 @@ int load_mime_db()
       
       while ((ext = strtok(NULL, " ")) != NULL)
       {
-	strcpy(typesdb[typesdbsz].ext, ext);
-	strcpy(typesdb[typesdbsz].type, type);
-	typesdbsz++;
+        strcpy(typesdb[typesdbsz].ext, ext);
+        strcpy(typesdb[typesdbsz].type, type);
+        typesdbsz++;
       }
     }
     
@@ -82,6 +85,7 @@ int load_mime_db()
   
   /*int i = 0;
   for(;i < typesdbsz; i++) printf("%s: %s\n", typesdb[i].ext, typesdb[i].type);*/
+  return 0;
 }
 
 char *get_content_type(char *ext)

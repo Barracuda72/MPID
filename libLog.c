@@ -43,6 +43,8 @@ static int log_write_time(int log)
 	  
   fwrite(currtime_s, strlen(currtime_s), 1, logs[log].log);
   fflush(logs[log].log);
+
+  return 0;
 }
 
 int log_write_string(int log, const char *string, int loglevel)
@@ -70,6 +72,8 @@ int log_write_string(int log, const char *string, int loglevel)
   fwrite(tmpstr, strlen(tmpstr), 1, logs[log].log);
   fwrite(line_end, strlen(line_end), 1, logs[log].log);
   fflush(logs[log].log);
+
+  return 0;
 }
 
 int log_open(char *path)
@@ -126,5 +130,7 @@ int log_close(int log)
   fclose(logs[log].log);
   
   logs[log].log = 0;
+
+  return 0;
 }
 

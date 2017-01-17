@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <dlfcn.h>
+#include <sys/stat.h>
 
 /* Our own includes */
 #include <libLog.h>
@@ -21,7 +22,9 @@
 #define DEBUG_STOP() log_close(dbgloghandle)
 #define DEBUG(x) log_write_string(dbgloghandle, x, LOG_WARN)
 
-int sockId, sockIdNew, status, i = 0, clientStructSize = 0;
+int sockId, sockIdNew, i = 0;
+long status;
+unsigned int clientStructSize = 0;
 struct addrinfo *hints, *server;
 struct sockaddr_in *client;
 char clientIpAddress[16];
@@ -78,9 +81,10 @@ void signal_action(int arg)
 int main()
 {
   DEBUG_START();
-  pid_t pid, sid;
   
-  /*pid = fork();
+  /*
+  pid_t pid, sid;
+  pid = fork();
   
   if(pid < 0) 
   {
@@ -124,7 +128,7 @@ int main()
     exit(EXIT_FAILURE);
   }
   
-  status = (int)signal(SIGIO, (*signal_action));	//For asyncronic input/output
+  status = (long)signal(SIGIO, (*signal_action));	//For asyncronic input/output
   
   if(status < 0)
   {
@@ -132,7 +136,7 @@ int main()
     exit(EXIT_FAILURE);
   }
   
-  status = (int)signal(SIGINT, (*signal_action));	//Interrupt, Ctrl-C
+  status = (long)signal(SIGINT, (*signal_action));	//Interrupt, Ctrl-C
   
   if(status < 0)
   {
@@ -140,7 +144,7 @@ int main()
     exit(EXIT_FAILURE);
   }
   
-  status = (int)signal(SIGCHLD, SIG_IGN);		//We don't need to wait child death
+  status = (long)signal(SIGCHLD, SIG_IGN);		//We don't need to wait child death
   
   if(status < 0)
   {

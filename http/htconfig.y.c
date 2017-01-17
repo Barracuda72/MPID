@@ -1319,7 +1319,7 @@ yyreduce:
 
   case 12:
 #line 90 "htconfig.y" /* yacc.c:1646  */
-    {strncpy_c(internal_conf->index, (yyvsp[0]), STR_LIMIT);}
+    {strncpy_c(internal_conf->index[0], (yyvsp[0]), STR_LIMIT);}
 #line 1324 "htconfig.y.c" /* yacc.c:1646  */
     break;
 
@@ -1343,7 +1343,7 @@ yyreduce:
 
   case 18:
 #line 94 "htconfig.y" /* yacc.c:1646  */
-    {internal_conf->dirind = (yyvsp[0]);}
+    {internal_conf->dirind = (long)(yyvsp[0]);}
 #line 1348 "htconfig.y.c" /* yacc.c:1646  */
     break;
 

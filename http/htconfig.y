@@ -87,10 +87,10 @@ commands: /* empty */ | commands command;
 command: servroot | servname | index | exec | dirind | TOKCOMMENT;
 servroot: TOKROOT TOKPATH {strncpy_c(internal_conf->sroot, $2, STR_LIMIT);};
 servname: TOKNAME TOKWORD {strncpy_c(internal_conf->sname, $2, STR_LIMIT);};
-index: TOKINDEX fnames {strncpy_c(internal_conf->index, $2, STR_LIMIT);};
+index: TOKINDEX fnames {strncpy_c(internal_conf->index[0], $2, STR_LIMIT);};
 fnames: | fnames TOKFILE {strncpy_c(internal_conf->index[internal_conf->indcnt++], $2, STR_LIMIT);};
 exec: TOKEXEC TOKWORD handle {strncpy_c(internal_conf->ext[internal_conf->extcnt], $2, 16); strncpy_c(internal_conf->exe[internal_conf->extcnt++], $3, STR_LIMIT);};
 handle: TOKPATH | TOKAT { $$ = $1; };
-dirind: TOKDIRIN boolean {internal_conf->dirind = $2;};
+dirind: TOKDIRIN boolean {internal_conf->dirind = (long)$2;};
 boolean: TOKTRUE | TOKFALSE {$$ = $1;};
 %%
