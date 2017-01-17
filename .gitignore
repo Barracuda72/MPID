@@ -38,3 +38,6 @@ main
 
 # My old directory
 OLD
+
+# HTML files
+*.html
